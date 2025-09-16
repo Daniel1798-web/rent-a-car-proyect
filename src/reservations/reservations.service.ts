@@ -23,8 +23,8 @@ export class ReservationsService {
       where: {
         carModelId,
         branchId,
-        startDate: { lte: new Date(endDate) },
-        endDate: { gte: new Date(startDate) }
+        status: { not: "CANCELLED" },
+        AND: [{ startDate: { lte: new Date(endDate) } }, { endDate: { gte: new Date(startDate) } }]
       }
     });
 

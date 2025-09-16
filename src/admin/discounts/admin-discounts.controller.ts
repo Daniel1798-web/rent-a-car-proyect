@@ -22,8 +22,10 @@ export class AdminDiscountsController {
       example1: {
         summary: "Descuento ejemplo",
         value: {
-          userId: "11111111-2222-3333-4444-555555555555",
+          code: "PROMO15",
+          userId: "97ae6ab9-9770-4883-9193-964d9d500d7e",
           percentage: 15,
+          validFrom: "2025-09-16",
           validTo: "2025-12-31",
           active: true
         }

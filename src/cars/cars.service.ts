@@ -14,8 +14,8 @@ export class CarsService {
       include: { inventory: true }
     });
 
-    let start: Date | undefined;
-    let end: Date | undefined;
+    let start = startDate ? new Date(startDate + "T00:00:00.000Z") : undefined;
+    let end = endDate ? new Date(endDate + "T23:59:59.999Z") : undefined;
     if (startDate && endDate) {
       start = new Date(startDate);
       end = new Date(endDate);

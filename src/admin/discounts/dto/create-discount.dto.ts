@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNumber, IsPositive, IsOptional, IsDateString } from "class-validator";
+import { IsString, IsNumber, IsPositive, IsOptional, IsDateString, IsBoolean } from "class-validator";
 
 export class CreateDiscountDto {
   @ApiProperty({ description: "Código del descuento (ej: 'SUMMER10')" })
@@ -15,6 +15,21 @@ export class CreateDiscountDto {
   @IsOptional()
   @IsString()
   userId?: string;
+
+  @ApiProperty({ description: "Fecha de inicio del descuento (YYYY-MM-DD)", required: false })
+  @IsOptional()
+  @IsDateString()
+  validFrom?: string;
+
+  @ApiProperty({ description: "Fecha de fin del descuento (YYYY-MM-DD)", required: false })
+  @IsOptional()
+  @IsDateString()
+  validTo?: string;
+
+  @ApiProperty({ description: "Si el descuento está activo", required: false })
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
 
   @ApiProperty({ description: "Fecha de inicio del descuento (YYYY-MM-DD)", required: false })
   @IsOptional()
