@@ -56,14 +56,12 @@ describe("App (e2e)", () => {
 
     request = supertest(app.getHttpServer());
 
-    // Login admin
     const adminLoginRes = await request
       .post("/admin/auth/login")
       .send({ email: "empleado1@rentacar.com", password: "miPassword123" });
     expect([200, 201]).toContain(adminLoginRes.status);
     adminToken = (adminLoginRes.body as LoginResponse).access_token;
 
-    // Login usuario
     const userLoginRes = await request
       .post("/auth/login")
       .send({ email: "usuario@gmail.com", password: "miPassword123" });
@@ -99,7 +97,7 @@ describe("App (e2e)", () => {
   });
 
   it("/admin/cars (POST) should create a car", async () => {
-    const uniqueId = Date.now(); // Para asegurar make/model único
+    const uniqueId = Date.now();
     const carPayload = {
       make: `Toyota-${uniqueId}`,
       model: `Corolla-${uniqueId}`,
@@ -109,7 +107,6 @@ describe("App (e2e)", () => {
 
     const res = await request.post("/admin/cars").set("Authorization", `Bearer ${adminToken}`).send(carPayload);
 
-    console.log(res.status, res.body); // debug
     expect([200, 201]).toContain(res.status);
     const car = res.body as CarModel;
     expect(car).toHaveProperty("id");
@@ -137,7 +134,6 @@ describe("App (e2e)", () => {
       .set("Authorization", `Bearer ${adminToken}`)
       .send(discountPayload);
 
-    console.log(res.status, res.body); // debug
     expect([200, 201]).toContain(res.status);
     const discount = res.body as Discount;
     expect(discount).toHaveProperty("id");

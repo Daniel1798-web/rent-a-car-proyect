@@ -11,20 +11,30 @@ async function main() {
     ],
     skipDuplicates: true
   });
-  console.log("Branches seeded ✅");
 
-  const hashedPassword = await argon2.hash("miPassword123");
+  const hashedEmployeePassword = await argon2.hash("miPassword123");
   await prisma.user.upsert({
     where: { email: "empleado1@rentacar.com" },
     update: {},
     create: {
       email: "empleado1@rentacar.com",
       name: "Empleado Admin",
-      password: hashedPassword,
+      password: hashedEmployeePassword,
       role: "employee"
     }
   });
-  console.log("Employee seeded ✅");
+
+  const hashedCustomerPassword = await argon2.hash("miPassword123");
+  await prisma.user.upsert({
+    where: { email: "usuario@gmail.com" },
+    update: {},
+    create: {
+      email: "usuario@gmail.com",
+      name: "Usuario Cliente",
+      password: hashedCustomerPassword,
+      role: "customer"
+    }
+  });
 
   const allBranches = await prisma.branch.findMany();
   if (allBranches.length === 0) throw new Error("No branches found");
@@ -50,14 +60,6 @@ async function main() {
       }
     });
   }
-
-  const cars = await prisma.carModel.findMany({
-    include: { inventory: true }
-  });
-
-  console.log("\n📦 Datos de prueba generados:");
-  console.table(allBranches.map((b) => ({ id: b.id, name: b.name })));
-  console.table(cars.map((c) => ({ id: c.id, make: c.make, model: c.model })));
 }
 
 main()
