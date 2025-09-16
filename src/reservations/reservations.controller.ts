@@ -5,10 +5,9 @@ import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { ApiBearerAuth, ApiTags, ApiOperation, ApiBody, ApiParam } from "@nestjs/swagger";
 import { Request } from "express";
 
-// --- Definición de la interfaz en el mismo archivo ---
 interface RequestWithUser extends Request {
   user?: {
-    sub: string; // userId
+    sub: string;
     email?: string;
     roles?: string[];
   };
