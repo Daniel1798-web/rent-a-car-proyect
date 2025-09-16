@@ -1,10 +1,18 @@
 import { Injectable, BadRequestException } from "@nestjs/common";
 import { PrismaService } from "../../prisma/prisma.service";
 import { CreateReservationDto } from "./dto/create-reservation.dto";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 @Injectable()
 export class ReservationsService {
-  constructor(private prisma: PrismaService) {}
+
+  private cancelLimitHours: number;
+
+
+  constructor(private prisma: PrismaService) {
+      this.cancelLimitHours = parseInt(process.env.CANCEL_LIMIT_HOURS || "0", 10);
+  }
 
   async createReservation(userId: string, dto: CreateReservationDto) {
     const { carModelId, branchId, startDate, endDate } = dto;
@@ -84,6 +92,8 @@ export class ReservationsService {
     });
   }
 
+
+
   async cancelReservation(userId: string, reservationId: string) {
     const reservation = await this.prisma.reservation.findUnique({
       where: { id: reservationId }
@@ -97,8 +107,18 @@ export class ReservationsService {
       throw new BadRequestException("No podés cancelar esta reserva.");
     }
 
-    if (new Date() >= reservation.startDate) {
+    const now = new Date();
+
+    if (now >= reservation.startDate) {
       throw new BadRequestException("No podés cancelar una reserva iniciada.");
+    }
+
+    const diffHours = (reservation.startDate.getTime() - now.getTime()) / (1000 * 60 * 60);
+
+    if (this.cancelLimitHours > 0 && diffHours < this.cancelLimitHours) {
+      throw new BadRequestException(
+        `Solo podés cancelar hasta ${this.cancelLimitHours} horas antes del inicio.`
+      );
     }
 
     return this.prisma.reservation.update({
