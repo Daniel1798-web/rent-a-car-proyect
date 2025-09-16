@@ -1,7 +1,17 @@
+# =========================
+# Node.js / NestJS / Angular
+# =========================
+
 # Node modules
 /node_modules
 /.pnp
 .pnp.js
+
+# Build output
+/dist
+/build
+/out-tsc
+/.nest
 
 # Logs
 npm-debug.log*
@@ -9,12 +19,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.log
 
 # Runtime data
-/dist
-/build
 /tmp
-/out-tsc
 /.cache
 
 # Environment files
@@ -31,9 +39,17 @@ Thumbs.db
 *.sublime-workspace
 *.sublime-project
 
-# NestJS specific
-/.nest
-/.tsbuildinfo
+# Angular specific
+/.angular
+/angular.json
+/.angular/cache
+/*.tsbuildinfo
 
-# Optional: coverage
+# Coverage
 /coverage
+/jest-coverage
+
+# Misc
+*.tsbuildinfo
+*.swp
+*.bak
