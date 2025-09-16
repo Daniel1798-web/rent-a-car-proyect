@@ -1,10 +1,39 @@
-# For projects using Nanoc (http://nanoc.ws/)
+# Node modules
+/node_modules
+/.pnp
+.pnp.js
 
-# Default location for output (needs to match output_dir's value found in nanoc.yaml)
-output/
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Temporary file directory
-tmp/nanoc/
+# Runtime data
+/dist
+/build
+/tmp
+/out-tsc
+/.cache
 
-# Crash Log
-crash.log
+# Environment files
+.env
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# NestJS specific
+/.nest
+/.tsbuildinfo
+
+# Optional: coverage
+/coverage
