@@ -66,6 +66,7 @@ npm install
 3.Crear archivo .env en la raíz con tus variables:
 DATABASE_URL=postgresql://USER:PASSWORD@localhost:5432/rentacar
 JWT_SECRET=supersecretkey
+CANCEL_LIMIT_HOURS=24
 PORT=3000
 
 Base de datos con Docker:
